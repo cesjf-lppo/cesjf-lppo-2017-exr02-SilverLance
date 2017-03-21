@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author aluno
  */
-@WebServlet(name = "NovaReclamacaoServlet", urlPatterns = {"/novo.html"})
+@WebServlet(name = "NovoReclamacaoServlet", urlPatterns = {"/novo.html"})
 public class NovaReclamacaoServlet extends HttpServlet {
 
     @Override
@@ -41,14 +41,13 @@ public class NovaReclamacaoServlet extends HttpServlet {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             String url = "jdbc:derby://localhost:1527/lppo-2017-1";
-            Connection conexao = DriverManager.getConnection(url, "usuario", "senha");
+            Connection conexao = DriverManager.getConnection(url, "usuario", "usuario");
             System.out.println("Conexao aberta com sucesso!");
 
-            String sql = "INSERT INTO contato(nome, email, descricao, status) VALUES('"
+            String sql = "INSERT INTO reclamacao(nome, email, descricao) VALUES('"
                     + nome + "', '"
                     + email + "', '"
-                    + descricao + "', '"
-                    + 0 + "')";
+                    + descricao + "')";
 
             Statement operacao = conexao.createStatement();
             operacao.executeUpdate(sql);

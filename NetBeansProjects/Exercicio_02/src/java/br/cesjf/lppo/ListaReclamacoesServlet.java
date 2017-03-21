@@ -30,7 +30,7 @@ public class ListaReclamacoesServlet extends HttpServlet {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             Connection conexao = DriverManager.getConnection("jdbc:derby://localhost:1527/lppo-2017-1", "usuario", "usuario");
             Statement operacao = conexao.createStatement();
-            ResultSet resultado = operacao.executeQuery("SELECT * FROM contato");
+            ResultSet resultado = operacao.executeQuery("SELECT * FROM reclamacao");
             while(resultado.next()){
                 Reclamacao ReclamacaoAtual = new Reclamacao();
                 ReclamacaoAtual.setId(resultado.getLong("id"));
@@ -47,8 +47,8 @@ public class ListaReclamacoesServlet extends HttpServlet {
             Logger.getLogger(ListaReclamacoesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        request.setAttribute("reclamacoes", reclamacao);
-        request.getRequestDispatcher("WEB-INF/lista-reclamacoes.jsp").forward(request, response);
+        request.setAttribute("reclamacao", reclamacao);
+        request.getRequestDispatcher("WEB-INF/listaReclamacoes.jsp").forward(request, response);
     }
 
 }

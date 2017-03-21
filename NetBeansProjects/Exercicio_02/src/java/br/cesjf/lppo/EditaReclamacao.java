@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "EditaReclamacao", urlPatterns = {"/edita.html"})
 public class EditaReclamacao extends HttpServlet {
 
-    @Override
+       @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Reclamacao reclamacao = new Reclamacao();
@@ -37,9 +37,8 @@ public class EditaReclamacao extends HttpServlet {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             Connection conexao = DriverManager.getConnection("jdbc:derby://localhost:1527/lppo-2017-1", "usuario", "usuario");
             Statement operacao = conexao.createStatement();
-            ResultSet resultado = operacao.executeQuery("SELECT * FROM contato WHERE id = " + id);
+            ResultSet resultado = operacao.executeQuery("SELECT * FROM reclamacao WHERE id = " + id);
             if (resultado.next()) {
-                //contato = new Contato();
                 reclamacao.setId(resultado.getLong("id"));
                 reclamacao.setNome(resultado.getString("nome"));
                 reclamacao.setEmail(resultado.getString("email"));
@@ -53,7 +52,7 @@ public class EditaReclamacao extends HttpServlet {
             Logger.getLogger(ListaReclamacoesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        request.setAttribute("reclamacoes", reclamacao);
+        request.setAttribute("reclamacao", reclamacao);
         request.getRequestDispatcher("WEB-INF/editaReclamacao.jsp").forward(request, response);
     }
 
