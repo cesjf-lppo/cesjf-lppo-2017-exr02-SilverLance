@@ -17,7 +17,7 @@
             <div><input type="hidden" name="id" value="${reclamacao.id}"/></div>
             <div><label>Nome: <input type="text" name="nome" value="${reclamacao.nome}"/> </label></div>
             <div><label>Email: <input type="text" name="nome" value="${reclamacao.email}"/> </label></div>
-            <div><label>Descrição: <textarea name="descricao" rows="4" cols="20" value="${reclamacao.descricao}"></textarea></label></div>
+            <div><label>Descrição: <textarea name="descricao" rows="4" cols="20" >${reclamacao.descricao}</textarea></label></div>
             <div><label>Status: <select name="status" value="${reclamacao.status}">
                 <option value="0">Aberto</option>
                 <option value="1">Confirmado</option>

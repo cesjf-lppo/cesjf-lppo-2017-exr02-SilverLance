@@ -1,9 +1,6 @@
 package br.cesjf.lppo;
 
-import br.cesjf.lppo.Reclamacao;
-import br.cesjf.lppo.ListaReclamacoesServlet;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -26,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "EditaReclamacao", urlPatterns = {"/edita.html"})
 public class EditaReclamacao extends HttpServlet {
 
-       @Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Reclamacao reclamacao = new Reclamacao();
@@ -53,12 +50,38 @@ public class EditaReclamacao extends HttpServlet {
         }
 
         request.setAttribute("reclamacao", reclamacao);
-        request.getRequestDispatcher("WEB-INF/editaReclamacao.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/editaReclamacoes.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        Reclamacao reclamacao = new Reclamacao();
+        reclamacao.setId(Long.parseLong(request.getParameter("id")));
+        reclamacao.setNome(request.getParameter("nome"));
+        reclamacao.setEmail(request.getParameter("email"));
+        reclamacao.setDescricao(request.getParameter("descricao"));
+
+        try {
+            //Pegar os dados do banco
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Connection conexao = DriverManager.getConnection("jdbc:derby://localhost:1527/lppo-2017-1", "usuario", "senha");
+            Statement operacao = conexao.createStatement();
+            operacao.executeUpdate("UPDATE reclamacao SET     nome='"
+                    + reclamacao.getNome() + "', email='"
+                    + reclamacao.getEmail() + "', descricao='"
+                    + reclamacao.getDescricao() + "' WHERE id="
+                    + reclamacao.getId()
+            );
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ListaReclamacoesServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListaReclamacoesServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        response.sendRedirect("lista.html");
     }
 
 }
