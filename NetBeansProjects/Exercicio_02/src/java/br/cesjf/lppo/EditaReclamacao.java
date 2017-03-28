@@ -62,6 +62,7 @@ public class EditaReclamacao extends HttpServlet {
         reclamacao.setNome(request.getParameter("nome"));
         reclamacao.setEmail(request.getParameter("email"));
         reclamacao.setDescricao(request.getParameter("descricao"));
+        reclamacao.setStatus(Integer.parseInt(request.getParameter("status")));
 
         try {
             //Pegar os dados do banco
@@ -71,7 +72,8 @@ public class EditaReclamacao extends HttpServlet {
             operacao.executeUpdate("UPDATE reclamacao SET     nome='"
                     + reclamacao.getNome() + "', email='"
                     + reclamacao.getEmail() + "', descricao='"
-                    + reclamacao.getDescricao() + "' WHERE id="
+                    + reclamacao.getDescricao() + "', status="
+                    + reclamacao.getStatus() +" WHERE id="
                     + reclamacao.getId()
             );
 
